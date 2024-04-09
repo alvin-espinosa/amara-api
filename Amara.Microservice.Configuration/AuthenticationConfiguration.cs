@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text;
 
 namespace Amara.Microservice.Configuration
 {
@@ -23,13 +24,14 @@ namespace Amara.Microservice.Configuration
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = auth0.Domain,
-                        //ValidateIssuer = auth0secret != null,
-                        ValidateAudience = true,
-                        ValidAudience = auth0.Audience,
-                        ValidateIssuerSigningKey = true,
                         NameClaimType = ClaimTypes.NameIdentifier,
-                        //IssuerSigningKey = secret != null ? new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)) : null
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidAudience = auth0.Audience,
+                        ValidIssuer = auth0.Domain,
+                        // Not yet make sense
+                        //ValidateIssuerSigningKey = true,
+                        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0.ClientSecret))
                     };
                 });
 
@@ -37,3 +39,4 @@ namespace Amara.Microservice.Configuration
         }
     }
 }
+

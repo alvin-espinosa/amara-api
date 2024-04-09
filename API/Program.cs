@@ -1,6 +1,4 @@
 using Amara.Microservice.Configuration;
-using Amara.Microservice.Configuration.Models;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,11 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
+app.UseAmaraConfiguration();
 
 app.MapControllers()
    .RequireAuthorization();
