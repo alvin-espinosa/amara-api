@@ -12,10 +12,11 @@ pool:
 variables:
    imageName: 'amara-api-docker'
 
+
 steps:
  - task: Docker@2
-   displayName: Build an image
    inputs:
-     repository: $(imageName)
-     command: build
-     Dockerfile: app/Dockerfile
+    containerRegistry: 'docker-service-connection'
+    repository: 'alvinespinosadev/amara-api-img'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
