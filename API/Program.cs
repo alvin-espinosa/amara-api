@@ -1,4 +1,4 @@
-//using Amara.Microservice.Configuration;
+using Amara.Microservice.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-//builder.Services.AddMicroServiceConfiguration(builder.Configuration);
+builder.Services.AddMicroServiceConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -20,7 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseAmaraConfiguration();
+app.UseAmaraConfiguration();
 
 app.MapControllers()
    .RequireAuthorization();
