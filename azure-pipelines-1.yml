@@ -16,6 +16,11 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
+- task: UseDotNet@2
+  inputs:
+    version: '8.0'  # Specify the desired version (e.g., 3.1, 5.0, etc.)
+    installationPath: '$(Agent.ToolsDirectory)/dotnet'  # Optional: Set the installation path (default is $(Agent.ToolsDirectory)/dotnet)
+
 - task: DotNetCoreCLI@2
   displayName: 'Run unit tests'
   inputs:
