@@ -18,7 +18,7 @@ steps:
   displayName: 'Run unit tests'
   inputs:
     command: test
-    projects: '**/*.csproj'
+    projects: '**/*Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - script: dotnet build --configuration $(buildConfiguration)
@@ -34,7 +34,7 @@ steps:
   inputs: 
     command: 'publish'
     publishWebProjects: false
-    projects: '**/API/API.csproj'
+    projects: 'API/API.csproj'
     arguments: '-- configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
