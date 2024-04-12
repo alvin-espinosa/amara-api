@@ -11,6 +11,7 @@ pool:
 
 variables:
    imageName: 'amara-api-docker'
+   buildConfiguration: 'Release'
 
 
 steps:
@@ -20,3 +21,9 @@ steps:
     repository: 'alvinespinosadev/amara-api-img'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    
+#  - task: DotNetCoreCLI@2
+#    inputs:
+#      command: test
+#      projects: ''
+#      arguments: '-- configuration $(buildConfiguration)'
