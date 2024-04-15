@@ -10,7 +10,7 @@ namespace Amara.Microservice.Configuration
 
             app.UseCors(policy =>
             {
-                policy.WithOrigins("http://localhost:4200");
+                policy.WithOrigins("http://localhost:4200", "https://kadi-3.azurewebsites.net");
                 policy.AllowAnyHeader();
             });
 
