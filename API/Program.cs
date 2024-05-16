@@ -1,4 +1,5 @@
 using Amara.Microservice.Configuration;
+using Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddMicroServiceConfiguration(builder.Configuration);
+builder.Services.AddDatabaseConfiguration<RentingContext>(builder.Configuration);
 
 var app = builder.Build();
 
@@ -21,6 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAmaraConfiguration();
+app.UseDatabaseConfiguration<RentingContext>();
 
 app.MapControllers()
    .RequireAuthorization();

@@ -10,7 +10,9 @@ namespace Amara.Microservice.Configuration
         {
             services.AddAuthorization(options =>
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                                            .RequireAuthenticatedUser()
+                                            .Build();
             });
 
             return services;
