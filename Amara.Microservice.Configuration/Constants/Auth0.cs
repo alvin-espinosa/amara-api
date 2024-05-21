@@ -9,4 +9,9 @@
     {
         public const string Text = "DBConfig";
     }
+
+    public class Origins
+    {
+        public const string Text = "Origins";
+    }
 }

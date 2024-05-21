@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAmaraConfiguration();
+app.UseAmaraConfiguration(builder.Configuration);
 app.UseDatabaseConfiguration<RentingContext>();
 
 app.MapControllers()
