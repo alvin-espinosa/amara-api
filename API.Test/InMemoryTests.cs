@@ -12,13 +12,13 @@ namespace API.Test
         [TestMethod]
         public void TestMethod1()
         {
-            using RentingContext context = SetupSQLiteMemoryContextWithOpenConnection();
+            //using RentingContext context = SetupSQLiteMemoryContextWithOpenConnection();
 
-            var customer = new Customer { };
+            //var customer = new Customer { };
 
-            context.Customers.Add(customer);
+            //context.Customers.Add(customer);
 
-            Assert.AreEqual(EntityState.Added, context.Entry(customer).State);
+            //Assert.AreEqual(EntityState.Added, context.Entry(customer).State);
         }
 
         private static RentingContext SetupSQLiteMemoryContextWithOpenConnection()

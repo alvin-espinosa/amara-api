@@ -1,6 +1,7 @@
 ﻿using Amara.Microservice.Configuration.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 namespace Amara.Microservice.Configuration
 {
@@ -13,8 +14,11 @@ namespace Amara.Microservice.Configuration
             var auth0 = builderConfiguration.GetSection(Constants.Auth0.Text).Get<Auth0>() ?? new Auth0();
 
             services
-                .ConfigureAuthentication(auth0);
+                .ConfigureAuthentication(auth0)
                 //.ConfigureAuthorization();
+                .AddMvc()
+                .AddJsonOptions(
+                    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             return services;
         }

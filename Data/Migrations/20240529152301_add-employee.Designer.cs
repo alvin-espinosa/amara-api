@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RentingContext))]
-    partial class RentingContextModelSnapshot : ModelSnapshot
+    [Migration("20240529152301_add-employee")]
+    partial class addemployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,16 +25,18 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Data.TestEntity.Dependent", b =>
+            modelBuilder.Entity("Data.TestEntity.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("Birthdate")
-                        .HasColumnType("date");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -42,64 +47,35 @@ namespace Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Dependents");
+                    b.ToTable("Person");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Data.TestEntity.Employee", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateOnly>("Birthdate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasBaseType("Data.TestEntity.Person");
 
                     b.Property<Guid?>("SpouseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
-
                     b.HasIndex("SpouseId");
 
-                    b.ToTable("Employees");
+                    b.HasDiscriminator().HasValue("Employee");
                 });
 
-            modelBuilder.Entity("Data.TestEntity.Spouse", b =>
+            modelBuilder.Entity("Data.TestEntity.Person", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateOnly>("Birthdate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Spouses");
-                });
-
-            modelBuilder.Entity("Data.TestEntity.Dependent", b =>
-                {
-                    b.HasOne("Data.TestEntity.Employee", "Principal")
+                    b.HasOne("Data.TestEntity.Employee", null)
                         .WithMany("Dependents")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Principal");
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("Data.TestEntity.Employee", b =>
                 {
-                    b.HasOne("Data.TestEntity.Spouse", "Spouse")
+                    b.HasOne("Data.TestEntity.Person", "Spouse")
                         .WithMany()
                         .HasForeignKey("SpouseId");
 

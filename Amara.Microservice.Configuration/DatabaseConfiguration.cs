@@ -18,17 +18,18 @@ namespace Amara.Microservice.Configuration
 
             services.AddDbContext<T>(opt =>
             {
-                var _writer = new StreamWriter("efcore-log.txt", true);
+                //var _writer = new StreamWriter("efcore-log.txt", true);
 
                 opt
-                    .UseSqlServer($"Server={dbConfig.Host};Database=${dbConfig.Name};Trusted_Connection=True;TrustServerCertificate=True;Encrypt=True")
-                    .LogTo(
-                        _writer.WriteLine, //Console.WriteLine, 
-                        new[]
-                        {
-                            DbLoggerCategory.Database.Command.Name
-                        },
-                        LogLevel.Debug)
+                    .UseSqlServer($"Server={dbConfig.Host};Database={dbConfig.Name};" +
+                                  "Trusted_Connection=True;TrustServerCertificate=True;Encrypt=True")
+                    //.LogTo(
+                    //    _writer.WriteLine, //Console.WriteLine, 
+                    //    new[]
+                    //    {
+                    //        DbLoggerCategory.Database.Command.Name
+                    //    },
+                    //    LogLevel.Debug)
                     .EnableSensitiveDataLogging()
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
@@ -51,3 +52,4 @@ namespace Amara.Microservice.Configuration
         }
     }
 }
+ 

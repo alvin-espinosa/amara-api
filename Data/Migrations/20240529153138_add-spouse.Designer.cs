@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RentingContext))]
-    partial class RentingContextModelSnapshot : ModelSnapshot
+    [Migration("20240529153138_add-spouse")]
+    partial class addspouse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace Data.Migrations
                     b.Property<DateOnly>("Birthdate")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -42,7 +45,7 @@ namespace Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Dependents");
+                    b.ToTable("Dependent");
                 });
 
             modelBuilder.Entity("Data.TestEntity.Employee", b =>
@@ -83,18 +86,14 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Spouses");
+                    b.ToTable("Spouse");
                 });
 
             modelBuilder.Entity("Data.TestEntity.Dependent", b =>
                 {
-                    b.HasOne("Data.TestEntity.Employee", "Principal")
+                    b.HasOne("Data.TestEntity.Employee", null)
                         .WithMany("Dependents")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Principal");
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("Data.TestEntity.Employee", b =>

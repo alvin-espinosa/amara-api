@@ -1,5 +1,4 @@
 ﻿using Data.TestEntity;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
@@ -8,11 +7,15 @@ namespace Data
     {
         public RentingContext(DbContextOptions<RentingContext> opt) : base(opt) { }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Reservation> Reservations { get; set; }
 
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
+        //public DbSet<Book> Books { get; set; }
+        //public DbSet<Author> Authors { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Dependent> Dependents { get; set; }
+        public DbSet<Spouse> Spouses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +28,7 @@ namespace Data
             //};
 
             //modelBuilder.Entity<Customer>().HasData(customers);
+            Employee.ConfigureDB(modelBuilder);
         }
 
         public override int SaveChanges()
