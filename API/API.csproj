@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Amara.Microservice.Configuration\Amara.Microservice.Configuration.csproj" />
+    <ProjectReference Include="..\Amara.Microservice.Shared\Amara.Microservice.Shared.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 

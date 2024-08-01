@@ -1,4 +1,5 @@
 using Amara.Microservice.Configuration;
+using Amara.Microservice.Shared;
 using Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddMicroServiceConfiguration(builder.Configuration);
 builder.Services.AddDatabaseConfiguration<RentingContext>(builder.Configuration);
+builder.Services.AddEmailServices(builder.Configuration);
+builder.Services.AddCacheServices(builder.Configuration);
 
 var app = builder.Build();
 
